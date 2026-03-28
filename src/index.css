@@ -43,7 +43,8 @@ body {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: #fff url('https://ingood.in/wp-content/uploads/2025/07/ingood-new-logo.png') center/cover no-repeat;
+  background: #fff url('https://ingood.in/wp-content/uploads/2025/07/ingood-new-logo.png') center no-repeat;
+  background-size: contain;
   margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -58,7 +59,7 @@ body {
 .hero p {
   color: #000;
   max-width: 800px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: justify;
   padding: 0 20px;
 }
