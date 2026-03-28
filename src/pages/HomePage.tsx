@@ -1,119 +1,51 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { useContentList } from '../hooks/useContentList';
-import ContentCard from '../components/ui/ContentCard';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 export default function HomePage() {
-  const { items: blogs, loading: blogsLoading } = useContentList({ type: 'blog', perPage: 3 });
-  const { items: press, loading: pressLoading } = useContentList({ type: 'press', perPage: 2 });
-
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50">
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-6"
-          >
-            <img 
-              src="https://ingood.in/wp-content/uploads/2025/07/ingood-new-logo.png" 
-              alt="InGood Logo" 
-              className="h-24 w-auto mx-auto"
-            />
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-bold text-black mb-6 tracking-tight"
-          >
-            InGood: Helps You Invest Smarter
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
-          >
-            Your source for cutting-edge insights, press releases, and stories that shape the future of digital media.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Link
-              to="/blog"
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
-            >
-              Read the Blog <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/press"
-              className="px-8 py-4 border border-gray-300 hover:border-blue-500 text-black font-medium rounded-lg transition-colors"
-            >
-              Press Releases
-            </Link>
-          </motion.div>
-        </div>
+      <section className="hero">
+        <div className="logo-circle"></div>
+        <h1>InGood: Helps You Invest Smarter</h1>
+        <p>InGood is designed to make investing easier, flexible, and practical for everyday people. Using our Self-Adjusting SIP system, the platform adapts to your cash flow, helping you invest more when you have extra funds and less when your expenses are high. With real-time cash flow monitoring and insights from your spending habits, InGood ensures that investing never disrupts your daily finances. Build financial habits, grow your wealth, and manage your money smarter—all in one app.</p>
       </section>
 
-      {/* Latest Blog Posts */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl font-bold text-black">Latest from the Blog</h2>
-          <Link to="/blog" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
-            View All <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-        {blogsLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogs.map((blog, index) => (
-              <motion.div
-                key={blog.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <ContentCard content={blog} basePath="/blog" />
-              </motion.div>
-            ))}
-          </div>
-        )}
+      {/* About Section */}
+      <section id="about">
+        <h2>About InGood</h2>
+        <p>InGood, powered by InGoodfinserv, is a modern fintech platform that combines intelligent technology with practical investing. Our platform studies your spending patterns, identifies extra or unused funds, and makes automatic investments securely from your bank account. Unlike traditional fixed SIPs, InGood's Self-Adjusting SIP system ensures that your investments are flexible and in sync with your real cash flow. By combining smart automation with simple, user-friendly tools, InGood helps everyday users make better financial decisions without stress.</p>
+        <p>Whether it's tracking expenses, analyzing cash flow, or monitoring investments, InGood offers features that empower you to take control of your financial future. Smart Sweep Automation moves idle funds to investments while keeping enough liquidity for your daily needs. InGood is more than just an investment app; it's a financial companion that grows with your life, making it easier to build wealth over time while maintaining financial flexibility.</p>
       </section>
 
-      {/* Latest Press Releases */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-200">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl font-bold text-black">Press Releases</h2>
-          <Link to="/press" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
-            View All <ArrowRight className="w-4 h-4" />
-          </Link>
+      {/* Features Section */}
+      <section id="features">
+        <h2>Our Features</h2>
+        <p><strong>Smart Sweep Automation:</strong> InGood's Smart Sweep Automation continuously monitors your bank balance and identifies idle funds that can be safely invested without affecting your daily expenses. The system automatically transfers these idle funds into your investment portfolio, maximizing your returns while maintaining sufficient liquidity for everyday spending. This ensures that your money is always working for you, even when you're not actively managing it.</p>
+        
+        <p><strong>Self-Adjusting SIP:</strong> Unlike traditional fixed SIPs, InGood uses a Self-Adjusting SIP system that dynamically adjusts the investment amount based on your real-time cash flow. When your expenses are lower, more funds are allocated to your investments. Conversely, when spending increases, the SIP contribution decreases to prevent over-committing funds. This approach removes the stress of manual investment planning and aligns perfectly with your financial lifestyle.</p>
+        
+        <p><strong>Expense & Cash Flow Tracking:</strong> InGood provides detailed insights into your spending habits, categorizes your expenses, and helps identify patterns that could be optimized. By understanding your cash inflow and outflow, the platform can suggest smarter investment opportunities and highlight areas where you can save. This feature ensures that your financial planning is holistic, taking into account both your spending and investment goals.</p>
+        
+        <p><strong>Secure & Transparent Investments:</strong> All investments made through InGood are executed securely using your linked bank account. The platform ensures full transparency, providing detailed records of each transaction and real-time updates on your portfolio performance. With robust security protocols and encryption standards, your money remains safe while you focus on building wealth steadily and confidently.</p>
+      </section>
+
+      {/* Social Section */}
+      <section id="social">
+        <h2>Connect With Us</h2>
+        <div className="social-links">
+          <a href="https://www.instagram.com/ingoodfinserv?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" target="_blank" aria-label="Instagram">
+            <i className="fab fa-instagram"></i>
+          </a>
+          <a href="https://x.com/IngoodFin" target="_blank" aria-label="X / Twitter">
+            <i className="fab fa-x-twitter"></i>
+          </a>
+          <a href="https://in.linkedin.com/company/ingood-finserv-private-limited" target="_blank" aria-label="LinkedIn">
+            <i className="fab fa-linkedin"></i>
+          </a>
+          <a href="https://ingood.in/" target="_blank" aria-label="Website">
+            <img src="https://ingood.in/wp-content/uploads/2025/07/ingood-new-logo.png" alt="InGood Website Logo" />
+          </a>
         </div>
-        {pressLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {press.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <ContentCard content={item} basePath="/press" />
-              </motion.div>
-            ))}
-          </div>
-        )}
       </section>
     </div>
   );
