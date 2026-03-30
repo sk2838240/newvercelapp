@@ -91,7 +91,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-      <meta name="robots" content="noindex, nofollow">
     </header>
   );
 }
