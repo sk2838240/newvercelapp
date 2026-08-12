@@ -16,6 +16,15 @@
   <div class="scroll-prog" id="scrollProg"></div>
   <button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
+  <div class="app-fabs" role="group" aria-label="Download the InGood app">
+    <a class="app-fab app-fab-android" href="https://play.google.com/store/apps/details?id=com.ingood&amp;hl=en_IN" target="_blank" rel="noopener noreferrer" aria-label="Get InGood on Google Play" title="Get it on Google Play">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.14-.52.38.38 0 0 0-.52.14l-1.87 3.23a11.43 11.43 0 0 0-8.82 0L6.22 5.92a.38.38 0 0 0-.52-.14.38.38 0 0 0-.14.52L7.4 9.48A10.81 10.81 0 0 0 2 18h20a10.81 10.81 0 0 0-5.4-8.52M7.3 15.09a1.06 1.06 0 1 1 1.06-1.06 1.06 1.06 0 0 1-1.06 1.06m9.4 0a1.06 1.06 0 1 1 1.06-1.06 1.06 1.06 0 0 1-1.06 1.06"/></svg>
+    </a>
+    <a class="app-fab app-fab-ios" href="https://apps.apple.com/in/app/ingood/id6752019056" target="_blank" rel="noopener noreferrer" aria-label="Download InGood on the App Store" title="Download on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.68 2.19-3.96 2.29-4.03-1.25-1.83-3.19-2.08-3.88-2.11-1.65-.17-3.22.97-4.06.97-.83 0-2.12-.95-3.49-.92-1.8.03-3.46 1.04-4.38 2.65-1.87 3.24-.48 8.03 1.34 10.66.89 1.29 1.95 2.73 3.34 2.68 1.34-.05 1.85-.87 3.47-.87 1.62 0 2.08.87 3.49.84 1.44-.02 2.35-1.31 3.23-2.61 1.02-1.5 1.44-2.95 1.46-3.03-.03-.01-2.8-1.07-2.83-4.24M14.38 4.57c.74-.89 1.24-2.13 1.1-3.37-1.07.04-2.36.71-3.12 1.6-.68.79-1.28 2.05-1.12 3.26 1.19.09 2.4-.6 3.14-1.49"/></svg>
+    </a>
+  </div>
+
   <nav class="nav"><div class="nav-in">
     <a href="index.html" class="logo" aria-label="InGood home"><span class="in">In</span><span class="good">Good</span></a>
     <ul class="nav-links" id="navLinks">

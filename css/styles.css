@@ -230,7 +230,9 @@ img,svg{max-width:100%;display:block;}
 .streak-badge .d{font-size:11px;color:var(--g6);line-height:1.35;}
 
 /* APP SCREENS */
-.screens{display:flex;gap:14px;overflow-x:auto;margin:0 -22px;padding:6px 22px 28px;scroll-snap-type:x mandatory;}
+/* direct child of full-width .sec (no side padding) → fills the section; the
+   22px side padding gives the edge cards a gutter without overflowing. */
+.screens{display:flex;gap:14px;overflow-x:auto;margin:0;padding:6px 22px 28px;scroll-snap-type:x mandatory;}
 .screens::-webkit-scrollbar{display:none;}
 .screen-card{flex:0 0 220px;scroll-snap-align:center;position:relative;}
 /* phone shell: soft outer glow + notch + home indicator so it reads as a real device */
@@ -389,7 +391,7 @@ img,svg{max-width:100%;display:block;}
 .proof-txt b{color:#fff;font-weight:700;}
 
 /* testimonials */
-.tcards{display:flex;gap:12px;overflow-x:auto;margin:0 -22px;padding:4px 22px 10px;scroll-snap-type:x mandatory;}
+.tcards{display:flex;gap:12px;overflow-x:auto;margin:0;padding:4px 22px 10px;scroll-snap-type:x mandatory;}
 .tcards::-webkit-scrollbar{display:none;}
 .tcard{flex:0 0 84%;scroll-snap-align:center;background:var(--white);border:1px solid var(--g2);border-radius:20px;padding:18px;box-shadow:var(--shadow-l);}
 .tcard-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
@@ -623,6 +625,18 @@ section[id]{scroll-margin-top:66px;}
 .to-top:focus-visible{outline:2px solid var(--mint);outline-offset:3px;}
 @media(hover:hover){.to-top:hover{background:var(--navy-xl);transform:translateY(-3px);}}
 
+/* floating app-download buttons (right edge) */
+.app-fabs{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:120;display:flex;flex-direction:column;gap:14px;}
+.app-fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 26px rgba(27,42,74,.28);transition:box-shadow .25s,filter .2s;animation:fabFloat 3.4s ease-in-out infinite;}
+.app-fab svg{width:27px;height:27px;}
+.app-fab-android{background:linear-gradient(135deg,#32de84,#0da65b);}
+.app-fab-ios{background:linear-gradient(135deg,#3a3f47,#0b0d10);animation-delay:1.7s;}
+.app-fab:focus-visible{outline:2px solid var(--mint);outline-offset:3px;}
+@media(hover:hover){.app-fab:hover{animation-play-state:paused;transform:translateY(-4px) scale(1.07);box-shadow:0 16px 32px rgba(27,42,74,.38);}}
+@keyframes fabFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+@media(max-width:600px){.app-fabs{right:12px;gap:12px;}.app-fab{width:48px;height:48px;}.app-fab svg{width:24px;height:24px;}}
+@media(prefers-reduced-motion:reduce){.app-fab{animation:none;}}
+
 /* click ripple (uses currentColor so it reads on any button) */
 .ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.3;transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none;}
 @keyframes rippleAnim{to{transform:scale(2.6);opacity:0;}}
@@ -796,7 +810,9 @@ section[id]{scroll-margin-top:66px;}
 /* ============================================================
    LIVE FEED — full-bleed stat band + dual-row scrolling ticker
    ============================================================ */
-.fullbleed{width:100vw;margin-left:calc(50% - 50vw);}
+/* parent .sec is already full-viewport-width with no side padding, so 100%
+   spans edge-to-edge without the scrollbar overshoot that 100vw introduces. */
+.fullbleed{width:100%;margin-left:0;margin-right:0;}
 /* full-width dark stat band */
 .live-band{background:linear-gradient(135deg,var(--navy),var(--navy-xl));color:#fff;padding:26px 22px;margin:4px 0 22px;position:relative;overflow:hidden;}
 .live-band::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(62,203,165,.16),transparent 70%);pointer-events:none;}
@@ -828,10 +844,11 @@ section[id]{scroll-margin-top:66px;}
 .plan-hint{margin-top:10px;font-size:12.5px;color:var(--g6);font-weight:500;}
 .plan-grid{display:grid;grid-template-columns:1fr;gap:24px;padding-top:34px;}
 
-/* 3D flip scaffold — flip on hover unless CTA is hovered */
+/* 3D flip scaffold — flip on hover (desktop) or via .flipped class (touch/JS) */
 .plan{position:relative;perspective:1800px;}
 .plan-inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,.1,.2,1);transform-style:preserve-3d;}
-.plan:hover:not(:has(.plan-cta:hover)) .plan-inner{transform:rotateY(180deg);}
+.plan.flipped .plan-inner{transform:rotateY(180deg);}
+@media(hover:hover){.plan:hover:not(:has(.plan-cta:hover)) .plan-inner{transform:rotateY(180deg);}}
 .plan-face{position:relative;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;display:flex;flex-direction:column;}
 .plan-back{position:absolute;inset:0;transform:rotateY(180deg);}
 

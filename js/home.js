@@ -6,14 +6,14 @@ const reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 // ---------- LIVE FEED: dual-row scrolling ticker ----------
 const T="assets/testimonials/";
-const names=[["Rohit D.","Cab driver · Mumbai",T+"img2.jpeg"],["Harpreet S.","Farmer · Amritsar",T+"img12.jpg"],["Nikhil T.","Barista · Kolkata",T+"img13.jpg"],["Ananya K.","Freelancer · Bengaluru",T+"img14.jpg"],["Manish P.","Shop owner · Surat",T+"img15.jpg"],["Rakesh V.","Accountant · Pune",T+"img16.jpg"],["Sneha R.","Teacher · Jaipur",T+"img20.jpg"],["Karan B.","Cook · Indore",T+"img21.jpg"]];
+const names=[["Rohit D.","Cab driver · Mumbai",T+"img2.webp"],["Harpreet S.","Farmer · Amritsar",T+"img12.webp"],["Nikhil T.","Barista · Kolkata",T+"img13.webp"],["Ananya K.","Freelancer · Bengaluru",T+"img14.webp"],["Manish P.","Shop owner · Surat",T+"img15.webp"],["Rakesh V.","Accountant · Pune",T+"img16.webp"],["Sneha R.","Teacher · Jaipur",T+"img20.webp"],["Karan B.","Cook · Indore",T+"img21.webp"]];
 const amts=[100,150,200,250,300,350,500,150,200,750,100,400];
 const row1=document.getElementById('tickRow1'),row2=document.getElementById('tickRow2');
 function tickCard(){
   const [nm,role,pic]=names[Math.floor(Math.random()*names.length)];
   const amt=amts[Math.floor(Math.random()*amts.length)];
   const el=document.createElement('div');el.className='tick-card';
-  el.innerHTML=`<div class="feed-av"><img src="${pic}" alt="" loading="lazy" onerror="var p=this.parentNode;if(p){p.style.background='var(--mint-l)';p.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mint-d);&quot;>${nm[0]}</div>';}"></div><div class="tick-txt"><div class="feed-name">${nm}</div><div class="feed-meta">${role}</div></div><div class="tick-amt">₹${amt}</div>`;
+  el.innerHTML=`<div class="feed-av"><img src="${pic}" alt="" width="36" height="36" loading="lazy" decoding="async" onerror="var p=this.parentNode;if(p){p.style.background='var(--mint-l)';p.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mint-d);&quot;>${nm[0]}</div>';}"></div><div class="tick-txt"><div class="feed-name">${nm}</div><div class="feed-meta">${role}</div></div><div class="tick-amt">₹${amt}</div>`;
   return el;
 }
 // populate both rows, then duplicate the whole sequence for a seamless -50% loop
@@ -243,8 +243,31 @@ document.querySelectorAll('.fitem').forEach(item=>{
 });
 
 // ---------- REVEAL + trigger months ----------
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(e.target.querySelector&&e.target.querySelector('#monthsBars')&&window.animateMonths){animateMonths();}if(e.target.querySelector&&e.target.querySelector('#growthChart')&&window.animateGrowth){animateGrowth();}io.unobserve(e.target);}});},{threshold:0.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const revealEls=[...document.querySelectorAll('.reveal')];
+function forceReveal(el){
+  if(el.classList.contains('in'))return;
+  el.classList.add('in');
+  if(el.querySelector&&el.querySelector('#monthsBars')&&window.animateMonths){animateMonths();}
+  if(el.querySelector&&el.querySelector('#growthChart')&&window.animateGrowth){animateGrowth();}
+}
+if('IntersectionObserver'in window){
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){forceReveal(e.target);io.unobserve(e.target);}});},{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+  // Safety net: if the observer never fires for something already on-screen
+  // (fast scroll on load, some in-app webviews), reveal it after a short delay
+  // so content — like the live ticker — can never stay stuck at opacity:0.
+  setTimeout(()=>{
+    const vh=window.innerHeight||document.documentElement.clientHeight;
+    revealEls.forEach(el=>{
+      if(el.classList.contains('in'))return;
+      const r=el.getBoundingClientRect();
+      if(r.top<vh&&r.bottom>0)forceReveal(el);
+    });
+  },1200);
+}else{
+  // No IntersectionObserver support → just show everything.
+  revealEls.forEach(forceReveal);
+}
 
 // ---------- CLICK RIPPLE on all buttons ----------
 function attachRipple(el){
