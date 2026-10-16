@@ -56,7 +56,7 @@ if(row1&&row2){
   fill(row1);fill(row2);
 }
 // today counter tick
-let tAmt=482300,tPpl=1247;const tAmtEl=document.getElementById('todayAmt'),tPplEl=document.getElementById('todayPpl');
+let tAmt=103546,tPpl=3021;const tAmtEl=document.getElementById('todayAmt'),tPplEl=document.getElementById('todayPpl');
 if(tAmtEl&&tPplEl){
   const countTick=()=>{tAmt+=Math.floor(Math.random()*400)+100;if(Math.random()>0.4)tPpl+=1;tAmtEl.textContent='₹'+tAmt.toLocaleString('en-IN');tPplEl.textContent=tPpl.toLocaleString('en-IN');};
   let countTimer=setInterval(countTick,2600);
