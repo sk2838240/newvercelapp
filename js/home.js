@@ -6,9 +6,30 @@ const reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 // ---------- LIVE FEED: dual-row scrolling ticker ----------
 const T="assets/testimonials/";
-const names=[["Rohit D.","Cab driver · Mumbai",T+"img2.webp"],["Harpreet S.","Farmer · Amritsar",T+"img12.webp"],["Nikhil T.","Barista · Kolkata",T+"img13.webp"],["Ananya K.","Freelancer · Bengaluru",T+"img14.webp"],["Manish P.","Shop owner · Surat",T+"img15.webp"],["Rakesh V.","Accountant · Pune",T+"img16.webp"],["Sneha R.","Teacher · Jaipur",T+"img20.webp"],["Karan B.","Cook · Indore",T+"img21.webp"]];
+const names=[
+  ["Rohit D.","Cab driver · Mumbai",T+"Rohit D..webp"],
+  ["Harpreet S.","Farmer · Amritsar",T+"Harpreet S..webp"],
+  ["Nikhil T.","Barista · Kolkata",T+"Nikhil T..webp"],
+  ["Ananya K.","Freelancer · Bengaluru",T+"Ananya K..webp"],
+  ["Manish P.","Shop owner · Surat",T+"Manish P..webp"],
+  ["Rakesh V.","Accountant · Pune",T+"Rakesh V..webp"],
+  ["Sneha R.","Teacher · Jaipur",T+"Sneha R..webp"],
+  ["Karan B.","Cook · Indore",T+"Karan B..webp"],
+  ["Amit S.","Delivery partner · Delhi",T+"Amit S..webp"],
+  ["Riya D.","Student · Pune",T+"Riya D..webp"],
+  ["Fatima A.","Nurse · Hyderabad",T+"Fatima A..webp"],
+  ["Suresh K.","Auto driver · Chennai",T+"Suresh K..webp"],
+  ["Priya D.","Home baker · Nagpur",T+"Priya D..webp"],
+  ["Imran S.","Electrician · Lucknow",T+"Imran S..webp"],
+  ["Kavita M.","Tailor · Ahmedabad",T+"Kavita M..webp"],
+  ["Vikram J.","Security guard · Noida",T+"Vikram J..webp"],
+  ["Neha P.","Receptionist · Chandigarh",T+"Neha P..webp"],
+  ["Arjun N.","Graphic designer · Kochi",T+"Arjun N..webp"],
+  ["DEV R.","Pharmacist · Mysuru",T+"Dev R..webp"],
+];
 const amts=[100,150,200,250,300,350,500,150,200,750,100,400];
 const row1=document.getElementById('tickRow1'),row2=document.getElementById('tickRow2');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function tickCard(){
   const [nm,role,pic]=names[Math.floor(Math.random()*names.length)];
   const amt=amts[Math.floor(Math.random()*amts.length)];
@@ -16,13 +37,21 @@ function tickCard(){
   el.innerHTML=`<div class="feed-av"><img src="${pic}" alt="" width="36" height="36" loading="lazy" decoding="async" onerror="var p=this.parentNode;if(p){p.style.background='var(--mint-l)';p.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mint-d);&quot;>${nm[0]}</div>';}"></div><div class="tick-txt"><div class="feed-name">${nm}</div><div class="feed-meta">${role}</div></div><div class="tick-amt">₹${amt}</div>`;
   return el;
 }
-// populate both rows, then duplicate the whole sequence for a seamless -50% loop
+// populate both rows: each row cycles through all 19 unique names (shuffled, no repeat),
+// then duplicates the set once for the seamless -50% loop.
 if(row1&&row2){
   const fill=row=>{
+    const order=shuffle(names.slice());
     const cards=[];
-    for(let i=0;i<16;i++)cards.push(tickCard());
-    cards.forEach(c=>row.appendChild(c));               // first half
-    cards.forEach(c=>row.appendChild(c.cloneNode(true)));// identical second half
+    for(let i=0;i<order.length;i++){
+      const [nm,role,pic]=order[i];
+      const amt=amts[Math.floor(Math.random()*amts.length)];
+      const el=document.createElement('div');el.className='tick-card';
+      el.innerHTML=`<div class="feed-av"><img src="${pic}" alt="" width="36" height="36" loading="lazy" decoding="async" onerror="var p=this.parentNode;if(p){p.style.background='var(--mint-l)';p.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mint-d);&quot;>${nm[0]}</div>';}"></div><div class="tick-txt"><div class="feed-name">${nm}</div><div class="feed-meta">${role}</div></div><div class="tick-amt">₹${amt}</div>`;
+      cards.push(el);
+    }
+    cards.forEach(c=>row.appendChild(c));               // first half — all 8 unique names
+    cards.forEach(c=>row.appendChild(c.cloneNode(true)));// identical second half for seamless loop
   };
   fill(row1);fill(row2);
 }
@@ -466,15 +495,4 @@ if(!window.matchMedia('(hover:hover)').matches){
   function fmt(v){return'₹'+Math.round(v).toLocaleString('en-IN');}
 })();
 
-// ---------- HERO IMAGE → subtle tilt on pointer ----------
-const heroVisual=document.querySelector('.hero-visual');
-if(heroVisual&&!reduceMotion&&window.matchMedia('(hover:hover)').matches){
-  heroVisual.style.transition='transform .2s ease';
-  heroVisual.style.transformStyle='preserve-3d';
-  heroVisual.addEventListener('pointermove',e=>{
-    const r=heroVisual.getBoundingClientRect();
-    const rx=((e.clientY-r.top)/r.height-.5)*-7,ry=((e.clientX-r.left)/r.width-.5)*7;
-    heroVisual.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-  });
-  heroVisual.addEventListener('pointerleave',()=>heroVisual.style.transform='');
-}
+// ---------- HERO IMAGE tilt removed — hero now uses the animated .igp component

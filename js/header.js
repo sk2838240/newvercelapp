@@ -15,6 +15,7 @@
   <a id="top"></a>
   <div class="scroll-prog" id="scrollProg"></div>
   <button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <div class="arn-badge" aria-label="SEBI ARN">ARN-316408</div>
 
   <div class="app-fabs" role="group" aria-label="Download the InGood app">
     <a class="app-fab app-fab-android" href="https://play.google.com/store/apps/details?id=com.ingood&amp;hl=en_IN" target="_blank" rel="noopener noreferrer" aria-label="Get InGood on Google Play" title="Get it on Google Play">
